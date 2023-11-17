@@ -1,73 +1,126 @@
 <!DOCTYPE html>
 <html lang="ko">
-	<head>
-		<meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
 
-		<!-- TODO: 또 무엇이 필요할까요? -->
-		<title>quest01test</title>
-	</head>
-	<body>
-		<header>
-			<!-- TODO: 어디까지를 header로 보는 것이 좋을까요? : 본문 시작 전-->
-		</header>
+    <!-- TODO: 또 무엇이 필요할까요? -->
+    <title>quest01test</title>
+    <style>
+        .shortIcon {
+            width: 75px;
+            height: 30px;
+            font-size: 14px;
+            text-align: center;
+            border: 0.5px rgb(128, 128, 128) solid;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!-- TODO: 어디까지를 header로 보는 것이 좋을까요? : 본문 시작 전-->
+</header>
+<div class="container" style="padding-top: 50px; margin-left:700px; width: 450px; height: auto;">
+    <section class="main">
 
-		<section class="main">
-			<!-- TODO: main은 어떤 식으로 나눌 수 있을까요? -->
-			<div class="logo">NAVER</div>
-			<div class="search">
-				<input type="text" placeholder="검색어를 입력해주세요"/>
-			</div>
-			<div class="home-shortcut">
-				<a href="">뉴스판</a>
-				<a href="">경제지표판</a>
-				<a href="">연예판</a>
-				<a href="">트렌드판</a>
-				<a href="">메일</a>
-				<a href="">카페</a>
-				<a href="">블로그</a>
-				<a href="">기타</a>
-			</div>
-			<div>
-				<div class="weather-small">
-					날씨 위젯
-				</div>
-				<div class="weather-big">
-					날씨 상세
-				</div>
-				<div class="banners">
-					<div class="banner-1">코로나 관련</div>
-					<div class="banner-2">임시정부 수립일</div>
-					<div class="banner-3">앱 광고</div>
-					<div class="banner-4">웹툰
-						<select>
-							<option>웹툰1</option>
-							<option>웹툰2</option>
-							<option>웹툰3</option>
-						</select>
-					</div>
-					<div class="banner-5">인기 주제 판
-						<a href="#">영화판</a>
-						<a href="#">뿜판</a>
-						<a href="#">웹툰판</a>
-						<a href="#">경제M판</a>
-					</div>
-					<div class="banner-6">업데이트 사전 안내</div>
-				</div>
-			</div>
-		</section>
+        <!-- TODO: main은 어떤 식으로 나눌 수 있을까요? -->
+        <div class="logo" style="justify-content: center; display: flex">
+            <p style="color: limegreen; font-size: 50px; font-weight: bolder">NAVER</p>
+        </div>
+        <div class="search" style="justify-content: center; margin-bottom: 30px; display: flex">
+            <input type="text" style="width: 270px; height: 30px" placeholder="검색어를 입력해주세요"/>
+            <button>검색</button>
+        </div>
+        <div class="home-shortcut"
+             style="flex-wrap: wrap; display: flex; gap: 1rem; width: 400px; margin-left: 50px; margin-bottom: 50px">
+            <a href="#" class="shortIcon">뉴스판</a>
+            <a href="#" class="shortIcon">경제지표판</a>
+            <a href="#" class="shortIcon">연예판</a>
+            <a href="#" class="shortIcon">트렌드판</a>
+            <a href="#" class="shortIcon">메일</a>
+            <a href="#" class="shortIcon">카페</a>
+            <a href="#" class="shortIcon">블로그</a>
+            <a href="#" class="shortIcon">기타</a>
+        </div>
+        <div>
+            <div class="weather">
+                <div class="weather-small"
+                     style="padding-left: 40px; padding-bottom: 20px; border: 1px lightgray solid">
+                    <p style="font-weight: bold">날씨 : 10˚ 맑음</p>
+                    <p style="font-size: 12px">어제보다 2˚ 높아요</p>
+                </div>
+                <div class="weather-big"
+                     style="padding-left: 40px; padding-top: 10px; border: 1px lightgray solid; height: 250px">
+                    <span style="font-weight: bold">날씨</span>
+                    <span style="font-size: 12px"> 서울시 잠실동</span>
+                    <div style="padding: 10px">
+                        <a href="#" style="font-size: 12px; border: 1px rgb(128,128,128) solid;">시간대별 날씨</a>
+                        <a href="#" style="font-size: 12px; border: 1px rgb(128,128,128) solid;">시간대별 미세먼지</a>
+                        <a href="#" style="font-size: 12px; border: 1px rgb(128,128,128) solid;">주간 날씨</a>
+                        <a href="#" style="font-size: 12px; border: 1px rgb(128,128,128) solid;">주간 미세먼지</a>
+                    </div>
+                </div>
+            </div>
+            <div class="banners"
+                 style="padding-top: 10px; height: 250px; gap: 3rem">
+                <div class="banner-1"
+                     style="align-content: baseline;flex-wrap: nowrap; padding-top: 20px; padding-left: 50px; padding-bottom: 30px; border: 1px lightgray solid; gap: 3rem; ">
+                    <div class="banner-1-1" style="float: left">
+                        <span style="font-weight: bold;">코로나 19</span>
+                        <p style="font-size: 12px"> 국내외 확진 현황</p>
+                    </div>
 
-		<footer>
-			<!-- TODO: 하단의 여러 가지 링크들은 어떻게 처리하면 좋을까요? -->
-			<div style="width: 50%; padding:10px">
-				<div class="info">
-					<a href="">로그인</a>
-					<a href="">전체서비스</a>
-					<a href="">PC버전</a>
-					<a href="">이용약관</a>
-					<a href="">개인정보처리방침</a>
-					<a href="">고객센터</a>
-				</div>
-			</div>
-		</footer>
-	</body>
+                    <div class="banner-1-2" style="padding-left: 200px;">
+                        <span style="font-weight: bold">코로나 팩트체크</span>
+                        <p style="font-size: 12px"> 백신 정보 팩트는?</p>
+                    </div>
+                </div>
+                <div class="banner-2"
+                     style="height: 40px; text-align: center; padding-top: 20px; padding-bottom: 10px; border: 1px lightgray solid;">제 102주년
+                    대한민국 임시정부 수립일
+                </div>
+                <div class="banner-3"
+                     style="height: 40px; text-align: left; padding-top: 20px; border: 1px lightgray solid;">
+                    <div style="font-size: 12px; padding-left: 30px">앱으로 <span style="font-weight: bold">새로운 네이버</span>를
+                        더 쾌적하게 사용해 보세요.
+                        <button>앱 사용하기</button>
+                    </div>
+                </div>
+                <div class="banner-4"
+                     style="height: 40px; padding-left:30px; text-align: left; padding-top: 20px; border: 1px lightgray solid">웹툰
+                    <select>
+                        <option>웹툰</option>
+                        <option>웹툰1</option>
+                        <option>웹툰2</option>
+                    </select>
+                </div>
+                <div class="banner-5"
+                     style="height: 40px; padding-left:30px;  text-align: left; padding-top: 20px; border: 1px lightgray solid">인기 주제 판
+                    <a href="#">영화판</a>
+                    <a href="#">뿜판</a>
+                    <a href="#">웹툰판</a>
+                    <a href="#">경제M판</a>
+                </div>
+                <div class="banner-6"
+                     style="height: 40px; padding-left:30px;  text-align: left; padding-top: 20px; border: 1px lightgray solid">업데이트 사전 안내
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <!-- TODO: 하단의 여러 가지 링크들은 어떻게 처리하면 좋을까요? -->
+        <div style="width: 50%; padding:100px; margin-top: 100px">
+            <div class="info">
+                <a href="" style="font-size: 12px">로그인</a>
+                <a href="" style="font-size: 12px">전체서비스</a>
+                <a href="" style="font-size: 12px">PC버전</a>
+                <a href="" style="font-size: 12px">이용약관</a>
+                <a href="" style="font-size: 12px">개인정보처리방침</a>
+                <a href="" style="font-size: 12px">고객센터</a>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
 </html>
