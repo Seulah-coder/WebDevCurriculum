@@ -33,15 +33,47 @@
 		</section>
 
 		<script>
+
+
 			let row1Squares = document.querySelectorAll('.row1 .square');
 			for(let node of row1Squares) {
 				/* TODO: node 변수를 어떻게 조작해야 할까요? */
+				node.setAttribute('changeColor', "false");
+				node.addEventListener("click", function (e){
+					let square = e.target;
+
+					if(square.getAttribute('changeColor') === "false"){
+						square.setAttribute('changeColor', true)
+						square.style.background = 'yellow';
+					} else {
+						console.log(square.getAttribute('changeColor'));
+						square.setAttribute('changeColor', false)
+						square.style.background = 'white';
+
+					}
+				});
 			}
 
 			let row2Squares = document.querySelectorAll('.row2 .square');
 			for(let node of row2Squares) {
 				/* TODO: node 변수를 어떻게 조작해야 할까요? */
+
+				console.log(node);
+				node.addEventListener("click", function (e){
+					let square = e.target;
+					console.log(square);
+
+					if(square.classList.contains("enabled")){
+						square.classList.remove("enabled")
+					} else {
+						square.classList.add("enabled")
+					}
+				});
 			}
+
+
+
+
 		</script>
 	</body>
 </html>
