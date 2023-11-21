@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+
+        const drawStar = () => {
+            let line = "";
+            const lineValue = document.getElementById('line').value;
+
+            if(lineValue){
+                for(let i=0; i< lineValue; i++){
+                    for(let j=lineValue; j > i; j--){
+                        line = line + "\u00A0";
+                    }
+                    for(let k=0; k < (2*i)+1; k++){
+                        line = line + "*";
+                    }
+                    line = line + "\n";
+                }
+            } else {
+                alert("숫자를 입력해 주세요.")
+                return false;
+            }
+            console.log(line);
+        }
+
+
+    </script>
+</head>
+<body>
+
+<input type="text" id="line" placeholder="줄 수를 입력해 주세요."> <button onclick="drawStar()">별그리기</button>
+
+<div id="star">
+
+
+</div>
+
+</body>
+</html>
