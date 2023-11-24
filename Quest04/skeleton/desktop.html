@@ -7,12 +7,69 @@
 	</head>
 	<body>
 		<section class="desktop">
+			<ul class="icons">
+
+			</ul>
 		</section>
 
 		<script>
-			let myDesktop = new Desktop(
-				/* TODO: myDesktop 인스턴스의 생성자의 변수로 무엇이 들어가야 할까요? */
-			);
+			let myDesktop = new Desktop(5, 3);
+
+			myDesktop.appendIcon(5);
+			myDesktop.appendFolder(3);
+
+			//아이콘 이동
+			let iconsView = document.querySelector('.icons');
+
+			let changeItem;
+			let changedItem;
+
+
+			let listItems = document.querySelectorAll('.icons li');
+			listItems.forEach((item, index) => {
+
+
+
+					item.addEventListener('dblclick', function (event){
+						if(item.className ==='folder') {
+							event.preventDefault();
+							console.log(item.className);
+							console.log("????????????????????????")
+							window.open("", "PopupWin", "width=500,height=600");
+						}
+					});
+
+
+				item.addEventListener('mouseup', function (event){
+					event.preventDefault();
+					console.log('mouseup');
+
+					changeItem = item;
+					// iconsView.removeChild(item);
+				})
+
+				item.addEventListener('mousemove', function (event){
+					event.preventDefault();
+					console.log('mousemove');
+
+				})
+
+				item.addEventListener('mousedown', function (event){
+					event.preventDefault();
+					console.log('mousedown');
+
+					if(changeItem){
+						console.log(changeItem)
+						item.after(changeItem);
+
+					}
+
+					// iconsView.appendChild(item);
+				})
+
+
+			})
+
 		</script>
 	</body>
 </html>
