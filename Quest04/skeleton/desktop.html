@@ -1,75 +1,63 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="./desktop.css">
-		<script src="./desktop.js"></script>
-	</head>
-	<body>
-		<section class="desktop">
-			<ul class="icons">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./desktop.css">
+    <script src="./desktop.js"></script>
+</head>
+<body>
+<section class="desktop">
+    <div class="icons"></div>
+</section>
 
-			</ul>
-		</section>
+<script>
+    let myDesktop = new Desktop(5, 3);
 
-		<script>
-			let myDesktop = new Desktop(5, 3);
+    myDesktop.appendIcon(5);
+    myDesktop.appendFolder(3);
 
-			myDesktop.appendIcon(5);
-			myDesktop.appendFolder(3);
+    //아이콘 이동
+    let iconsView = document.querySelector('.icons');
 
-			//아이콘 이동
-			let iconsView = document.querySelector('.icons');
-
-			let changeItem;
-			let changedItem;
+    let listItems = document.querySelectorAll('.icons span');
+    listItems.forEach((item, index) => {
 
 
-			let listItems = document.querySelectorAll('.icons li');
-			listItems.forEach((item, index) => {
+		item.onmouseup = function (){
+			console.log("????????????????")
+		}
 
+		item.onmousedown= function (event){
+			event.preventDefault();
+			item.style.position = 'absolute';
+			item.style.zIndex = 1000;
 
+			function moveAt(pageX, pageY){
+				item.style.left = pageX - item.offsetWidth /2 + 'px';
+				item.style.top = pageY - item.offsetHeight/2 + 'px';
+			}
 
-					item.addEventListener('dblclick', function (event){
-						if(item.className ==='folder') {
-							event.preventDefault();
-							console.log(item.className);
-							console.log("????????????????????????")
-							window.open("", "PopupWin", "width=500,height=600");
-						}
-					});
+			moveAt(event.pageX, event.pageY);
 
+			function onMouseMove(event){
+				moveAt(event.pageX, event.pageY);
+			}
 
-				item.addEventListener('mouseup', function (event){
-					event.preventDefault();
-					console.log('mouseup');
+            function onMouseUp(event){
+                document.removeEventListener('mousemove', onMouseMove);
+                item.onmouseup = null;
+            }
 
-					changeItem = item;
-					// iconsView.removeChild(item);
-				})
+			document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+		}
 
-				item.addEventListener('mousemove', function (event){
-					event.preventDefault();
-					console.log('mousemove');
+		item.ondragstart = function (){
+			return false;
+		}
 
-				})
+    })
 
-				item.addEventListener('mousedown', function (event){
-					event.preventDefault();
-					console.log('mousedown');
-
-					if(changeItem){
-						console.log(changeItem)
-						item.after(changeItem);
-
-					}
-
-					// iconsView.appendChild(item);
-				})
-
-
-			})
-
-		</script>
-	</body>
+</script>
+</body>
 </html>

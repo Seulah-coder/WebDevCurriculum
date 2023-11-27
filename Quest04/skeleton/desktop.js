@@ -20,8 +20,8 @@ class Desktop {
                 const desktopView = document.querySelector('.icons');
                    const icon = this.createIcon(iconCount, parseInt(i)+ 1);
 
-                const createLiElement = document.createElement('li');
-                createLiElement.classList.add('icon');
+                const createLiElement = document.createElement('span');
+                createLiElement.classList.add('icon-icon');
                 createLiElement.setAttribute('order', icon.order);
                 createLiElement.textContent = icon.name;
                 desktopView.append(createLiElement);
@@ -48,8 +48,8 @@ class Desktop {
                 const desktopView = document.querySelector('.icons');
                     const folder = this.createFolder(folderCount, parseInt(i + 1));
 
-                const createLiElement = document.createElement('li');
-                createLiElement.classList.add('folder');
+                const createLiElement = document.createElement('span');
+                createLiElement.classList.add('icon-folder');
                 createLiElement.setAttribute('order', parseInt(this.iconCount + i +1).toString());
                 createLiElement.textContent = '폴더' + parseInt(this.iconCount + i + 1).toString();
                 desktopView.append(createLiElement);
