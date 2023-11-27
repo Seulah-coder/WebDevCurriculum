@@ -12,9 +12,9 @@
 
 <script>
 
-    let myDesktop = new Desktop(5, 3);
+    let myDesktop = new Desktop(3, 3);
 
-    myDesktop.appendIcon(5);
+    myDesktop.appendIcon(3);
     myDesktop.appendFolder(3);
 
     //아이콘 이동
@@ -26,6 +26,7 @@
         document.removeEventListener('mousedown', mouseDownAction);
         isMoving = false;
         item.ondblclick = function (event){
+            console.log("doubleClick")
             event.preventDefault();
             if(item.classList.contains('icon-folder')){
                 var win = window.open('', 'popupWin', 'width=500, height=600');
@@ -37,9 +38,8 @@
     function mouseDownAction(item, event){
 
         console.log("mouseDown")
-        event.preventDefault();
         item.style.position = 'absolute';
-        isMoving = true;
+
         // item.style.zIndex = 1000;
 
         function moveAt(pageX, pageY){
@@ -50,6 +50,7 @@
         moveAt(event.pageX, event.pageY);
 
         function onMouseMove(event){
+            isMoving = true;
             if(isMoving){
                 moveAt(event.pageX, event.pageY);
             }
@@ -68,7 +69,9 @@
     let listItems = document.querySelectorAll('.icons span');
     listItems.forEach((item, index) => {
 		item.onmousedown= function (event){
+            console.log(isMoving)
             mouseDownAction(item, event);
+
 		}
 
 		item.ondragstart = function (){
