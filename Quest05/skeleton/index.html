@@ -2,13 +2,90 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/style.css">
-		<script src="/notepad.js"></script>
+		<link rel="stylesheet" href="./style.css">
+		<script src="./notepad.js"></script>
 	</head>
 	<body>
 		<!-- TODO: 이 곳을 채워 클라이언트를 만들어 보세요 -->
 		<script>
 			let notepad = new Notepad();
+
+			window.onload = function (){
+				document.querySelector('#file_id').innerHTML = 'untitled'
+				document.querySelector('#save_file_form_name').value = 'untitled';
+				document.querySelector('#new_file_button').addEventListener('click', newFile, false);
+				document.querySelector('#road_file_button').addEventListener('click', roadFile, false);
+				document.querySelector('#open_file').addEventListener('change', function (){
+					var file = this.files[0];
+					console.log(file);
+					const fileName = file.name.split('.');
+					document.querySelector('#file_id').innerHTML = fileName[0];
+					document.querySelector('#save_file_form_name').value = fileName[0];
+					var reader = new FileReader();
+					reader.onload = function (){
+						console.log(reader);
+						document.querySelector('#main').value = reader.result;
+					}
+					reader.readAsText(file);
+				}, false);
+				document.querySelector('#save_file_button').addEventListener('click', function (e){
+					document.querySelector('#save_file_form').style.display = 'block';
+				}, false);
+				document.querySelector('#save_file_form').addEventListener('submit', function (e){
+					e.preventDefault();
+					var name = this.elements[0].value;
+					saveFile(name);
+				});
+			}
+
+			const saveFile = function (name){
+				const a = document.createElement("a");
+				var text = document.querySelector('#main').value;
+				var file = new Blob([text], {type:"text/plain; charset=utf-8"});
+				a.href = URL.createObjectURL(file);
+				a.download = name + '.txt';
+				a.click();
+			}
+			const newFile = function (){
+				let askSave = confirm("저장 되지 않은 정보는 삭제 됩니다. 새 파일을 만드시겠습니까?");
+				if(askSave){
+					document.querySelector('#main').value = "";
+				}
+
+			};
+
+			const roadFile = function (){
+				document.querySelector('#open_file').click();
+			}
+
+
 		</script>
+
+		<header>
+			<span>
+				<span id="file_id">
+				</span>
+			</span>
+			<nav>
+				<ul style="width: 150px;">
+					<li>File</li>
+					<ul>
+						<li id="new_file_button">New</li>
+						<li id="road_file_button">Open</li>
+							<input type="file" class="open_file" id="open_file" style="display: none">
+						<li id="save_file_button">Save</li>
+							<form id="save_file_form" class="hide" style="display: none">
+								<label for="save_file_form_name">File name:</label>
+								<input type="text" id="save_file_form_name" class="input">
+								<button type="submit" class="button">저장</button>
+							</form>
+					</ul>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<textarea id="main" class="main-textarea"></textarea>
+		</main>
 	</body>
 </html>
