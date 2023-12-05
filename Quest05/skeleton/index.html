@@ -10,12 +10,19 @@
 		<script>
 			let notepad = new Notepad();
 
-			window.onload = function (){
+			let newTab = 1;
+
+			document.addEventListener('DOMContentLoaded', () => {
+				//tab menu
+				createTabList(newTab);
+
+				//file buttons
 				document.querySelector('#file_id').innerHTML = 'untitled'
 				document.querySelector('#save_file_form_name').value = 'untitled';
 				document.querySelector('#new_file_button').addEventListener('click', newFile, false);
 				document.querySelector('#road_file_button').addEventListener('click', roadFile, false);
 				document.querySelector('#open_file').addEventListener('change', function (){
+
 					var file = this.files[0];
 					console.log(file);
 					const fileName = file.name.split('.');
@@ -27,6 +34,7 @@
 						document.querySelector('#main').value = reader.result;
 					}
 					reader.readAsText(file);
+					createTabList(newTab);
 				}, false);
 				document.querySelector('#save_file_button').addEventListener('click', function (e){
 					document.querySelector('#save_file_form').style.display = 'block';
@@ -36,9 +44,57 @@
 					var name = this.elements[0].value;
 					saveFile(name);
 				});
+
+
+
+			})
+
+			const changeTab = function (tabCount){
+				console.log("??????????????????????????????");
+				console.log(tabCount);
+				//클릭 시 탭 메뉴 움직이기
+				const tabList = document.querySelectorAll('.tab_menu .tab_list li');
+				for(let j=0; j< tabList.length; j++){
+					console.log(tabList);
+					tabList[j].classList.remove('is_on');
+				}
+
+				const findTabId = document.getElementById('tab' + tabCount);
+				if(findTabId){
+					findTabId.parentNode.classList.add('is_on');
+				}
+			}
+
+
+
+
+			const createTabList = function (tabCount){
+				const tabList = document.querySelector('.tab_list');
+				const liList = tabList.getElementsByTagName('li');
+				if(liList.length > 0){
+					for(var i=0; i<liList.length; i++){
+						liList.item(i).classList.remove('is_on');
+					}
+				}
+
+				var li = document.createElement('li');
+				li.classList.add('is_on');
+					var aTag = document.createElement('a');
+					aTag.onclick = function (){
+						changeTab(tabCount);
+					}
+					aTag.innerHTML = "tab" + tabCount;
+					aTag.id = "tab" + tabCount;
+					aTag.classList.add('change_tab_btn');
+
+				li.appendChild(aTag);
+				tabList.appendChild(li);
+
+				newTab++;
 			}
 
 			const saveFile = function (name){
+				//새 파일 만드는 로직/ 기존 파일에서 저장하는 로직 분리 필요
 				const a = document.createElement("a");
 				var text = document.querySelector('#main').value;
 				var file = new Blob([text], {type:"text/plain; charset=utf-8"});
@@ -62,9 +118,15 @@
 		</script>
 
 		<header>
+			<div class="tab_menu">
+				<ul class="tab_list">
+
+				</ul>
+			</div>
 			<span>
 				<span id="file_id">
 				</span>
+				<span id="save_message" style="color: red"></span>
 			</span>
 			<nav>
 				<ul style="width: 150px;">
