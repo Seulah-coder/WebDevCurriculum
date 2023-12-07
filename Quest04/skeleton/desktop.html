@@ -11,45 +11,67 @@
 </section>
 
 <script>
-    let myDesktop = new Desktop(5, 3);
 
-    myDesktop.appendIcon(5);
+    let myDesktop = new Desktop(3, 3);
+
+    myDesktop.appendIcon(3);
     myDesktop.appendFolder(3);
 
     //아이콘 이동
     let iconsView = document.querySelector('.icons');
+    let isMoving = false;
+
+    let listFolder = document.querySelectorAll('.icon-folder');
+    listFolder.forEach((item, index) => {
+        document.removeEventListener('mousedown', mouseDownAction);
+        isMoving = false;
+        item.ondblclick = function (event){
+            console.log("doubleClick")
+            event.preventDefault();
+            if(item.classList.contains('icon-folder')){
+                var win = window.open('./desktop.html', 'popupWin', 'width=500, height=600');
+                // win.document.write('folder 열림');
+            }
+        }
+    })
+
+    function mouseDownAction(item, event){
+
+        console.log("mouseDown")
+        item.style.position = 'absolute';
+
+        // item.style.zIndex = 1000;
+
+        function moveAt(pageX, pageY){
+            item.style.left = pageX - item.offsetWidth /2 + 'px';
+            item.style.top = pageY - item.offsetHeight/2 + 'px';
+        }
+
+        moveAt(event.pageX, event.pageY);
+
+        function onMouseMove(event){
+            isMoving = true;
+            if(isMoving){
+                moveAt(event.pageX, event.pageY);
+            }
+        }
+
+        function onMouseUp(event){
+            document.removeEventListener('mousemove', onMouseMove);
+            item.onmouseup = null;
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+
+    }
 
     let listItems = document.querySelectorAll('.icons span');
     listItems.forEach((item, index) => {
-
-
-		item.onmouseup = function (){
-			console.log("????????????????")
-		}
-
 		item.onmousedown= function (event){
-			event.preventDefault();
-			item.style.position = 'absolute';
-			item.style.zIndex = 1000;
+            console.log(isMoving)
+            mouseDownAction(item, event);
 
-			function moveAt(pageX, pageY){
-				item.style.left = pageX - item.offsetWidth /2 + 'px';
-				item.style.top = pageY - item.offsetHeight/2 + 'px';
-			}
-
-			moveAt(event.pageX, event.pageY);
-
-			function onMouseMove(event){
-				moveAt(event.pageX, event.pageY);
-			}
-
-            function onMouseUp(event){
-                document.removeEventListener('mousemove', onMouseMove);
-                item.onmouseup = null;
-            }
-
-			document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
 		}
 
 		item.ondragstart = function (){

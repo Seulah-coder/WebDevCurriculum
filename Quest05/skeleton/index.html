@@ -2,13 +2,180 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/style.css">
-		<script src="/notepad.js"></script>
+		<link rel="stylesheet" href="./style.css">
+		<script src="./notepad.js"></script>
 	</head>
 	<body>
 		<!-- TODO: 이 곳을 채워 클라이언트를 만들어 보세요 -->
 		<script>
 			let notepad = new Notepad();
+
+			let newTab = 1;
+			let currentFile;
+
+
+			document.addEventListener('DOMContentLoaded', () => {
+
+				const main = document.querySelector('#main');
+				main.addEventListener('keyup', () => {
+					console.log(main.value);
+					localStorage.setItem("unsavedItem", main.value);
+					const message = document.querySelector('#save_message');
+					message.innerHTML = '저장되지 않음';
+				});
+
+				//tab menu
+				createTabList(newTab);
+
+				//file buttons
+				document.querySelector('#file_id').innerHTML = 'untitled'
+				document.querySelector('#save_file_form_name').value = 'untitled';
+				document.querySelector('#new_file_button').addEventListener('click', newFile, false);
+				document.querySelector('#road_file_button').addEventListener('click', roadFile, false);
+				document.querySelector('#open_file').addEventListener('change', function (){
+
+					var file = this.files[0];
+					console.log(file);
+					currentFile  = this.files[0];
+					const fileName = file.name.split('.');
+					document.querySelector('#file_id').innerHTML = fileName[0];
+					document.querySelector('#save_file_form_name').value = fileName[0];
+					var reader = new FileReader();
+					reader.onload = function (){
+						console.log(reader);
+						document.querySelector('#main').value = reader.result;
+					}
+					reader.readAsText(file);
+					createTabList(newTab);
+				}, false);
+				document.querySelector('#save_file_button').addEventListener('click', function (e){
+
+
+						document.querySelector('#save_file_form').style.display = 'block';
+						const saveText = localStorage.getItem("unsavedItem");
+						console.log(saveText);
+						console.log(currentFile);
+						if(currentFile){
+							currentFile.write(saveText);
+							const saveMsg = document.getElementById('save_message');
+							saveMsg.innerText = '저장 완료';
+						}
+
+				}, false);
+				document.querySelector('#save_file_form').addEventListener('submit', function (e){
+					e.preventDefault();
+					var name = this.elements[0].value;
+					saveFile(name);
+				});
+
+
+
+			})
+
+			const changeTab = function (tabCount){
+				console.log("??????????????????????????????");
+				console.log(tabCount);
+				//클릭 시 탭 메뉴 움직이기
+				const tabList = document.querySelectorAll('.tab_menu .tab_list li');
+				for(let j=0; j< tabList.length; j++){
+					console.log(tabList);
+					tabList[j].classList.remove('is_on');
+				}
+
+				const findTabId = document.getElementById('tab' + tabCount);
+				if(findTabId){
+					findTabId.parentNode.classList.add('is_on');
+				}
+			}
+
+
+
+
+			const createTabList = function (tabCount){
+				const tabList = document.querySelector('.tab_list');
+				const liList = tabList.getElementsByTagName('li');
+				if(liList.length > 0){
+					for(var i=0; i<liList.length; i++){
+						liList.item(i).classList.remove('is_on');
+					}
+				}
+
+				var li = document.createElement('li');
+				li.classList.add('is_on');
+					var aTag = document.createElement('a');
+					aTag.onclick = function (){
+						changeTab(tabCount);
+					}
+					aTag.innerHTML = "tab" + tabCount;
+					aTag.id = "tab" + tabCount;
+					aTag.classList.add('change_tab_btn');
+
+				li.appendChild(aTag);
+				tabList.appendChild(li);
+
+				newTab++;
+			}
+
+			const saveFile = function (name){
+				//새 파일 만드는 로직/ 기존 파일에서 저장하는 로직 분리 필요
+				const a = document.createElement("a");
+				var text = document.querySelector('#main').value;
+				var file = new Blob([text], {type:"text/plain; charset=utf-8"});
+				a.href = URL.createObjectURL(file);
+				a.download = name + '.txt';
+				a.click();
+
+				//파일 찾아서 이름 동일하면 alert 리턴 하고 다르면 세이브 하기
+
+				const saveMsg = document.getElementById('save_message');
+				saveMsg.innerText = '저장 완료';
+			}
+			const newFile = function (){
+				let askSave = confirm("저장 되지 않은 정보는 삭제 됩니다. 새 파일을 만드시겠습니까?");
+				if(askSave){
+					document.querySelector('#main').value = "";
+				}
+
+			};
+
+			const roadFile = function (){
+				document.querySelector('#open_file').click();
+			}
+
+
 		</script>
+
+		<header>
+			<div class="tab_menu">
+				<ul class="tab_list">
+
+				</ul>
+			</div>
+			<span>
+				<span id="file_id">
+				</span>
+				<span id="save_message" style="color: red"></span>
+			</span>
+			<nav>
+				<ul style="width: 150px;">
+					<li>File</li>
+					<ul>
+						<li id="new_file_button">New</li>
+						<li id="road_file_button">Open</li>
+							<input type="file" class="open_file" id="open_file" style="display: none">
+						<li id="save_file_button">Save</li>
+							<form id="save_file_form" class="hide" style="display: none">
+								<label for="save_file_form_name">File name:</label>
+								<input type="text" id="save_file_form_name" class="input">
+								<button type="submit" class="button">저장</button>
+							</form>
+					</ul>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<textarea id="main" class="main-textarea"></textarea>
+		</main>
 	</body>
 </html>
