@@ -11,8 +11,19 @@
 			let notepad = new Notepad();
 
 			let newTab = 1;
+			let currentFile;
+
 
 			document.addEventListener('DOMContentLoaded', () => {
+
+				const main = document.querySelector('#main');
+				main.addEventListener('keyup', () => {
+					console.log(main.value);
+					localStorage.setItem("unsavedItem", main.value);
+					const message = document.querySelector('#save_message');
+					message.innerHTML = '저장되지 않음';
+				});
+
 				//tab menu
 				createTabList(newTab);
 
@@ -25,6 +36,7 @@
 
 					var file = this.files[0];
 					console.log(file);
+					currentFile  = this.files[0];
 					const fileName = file.name.split('.');
 					document.querySelector('#file_id').innerHTML = fileName[0];
 					document.querySelector('#save_file_form_name').value = fileName[0];
@@ -37,7 +49,18 @@
 					createTabList(newTab);
 				}, false);
 				document.querySelector('#save_file_button').addEventListener('click', function (e){
-					document.querySelector('#save_file_form').style.display = 'block';
+
+
+						document.querySelector('#save_file_form').style.display = 'block';
+						const saveText = localStorage.getItem("unsavedItem");
+						console.log(saveText);
+						console.log(currentFile);
+						if(currentFile){
+							currentFile.write(saveText);
+							const saveMsg = document.getElementById('save_message');
+							saveMsg.innerText = '저장 완료';
+						}
+
 				}, false);
 				document.querySelector('#save_file_form').addEventListener('submit', function (e){
 					e.preventDefault();
@@ -101,6 +124,11 @@
 				a.href = URL.createObjectURL(file);
 				a.download = name + '.txt';
 				a.click();
+
+				//파일 찾아서 이름 동일하면 alert 리턴 하고 다르면 세이브 하기
+
+				const saveMsg = document.getElementById('save_message');
+				saveMsg.innerText = '저장 완료';
 			}
 			const newFile = function (){
 				let askSave = confirm("저장 되지 않은 정보는 삭제 됩니다. 새 파일을 만드시겠습니까?");
